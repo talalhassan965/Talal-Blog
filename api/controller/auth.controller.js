@@ -1,9 +1,10 @@
 import User from '../models/user.modle.js'
 import bcrytpjs from 'bcryptjs'
-export const signup = async (req, res) =>{
+import { errorHandler } from '../util/error.js';
+export const signup = async (req, res, next) =>{
     const {username, email, password} = req.body;
     if (!username || !email || !password || username === '' || email === '' || password === ''){
-        return res.status(400).json({message: "All Feilds Are Required"})
+        next(errorHandler(400, 'All fields are required'))
     }
 
     const hashedPassword = bcrytpjs.hashSync(password, 10)
@@ -19,7 +20,7 @@ export const signup = async (req, res) =>{
         res.json("Signup Successfully")
     }
     catch (error) {
-        res.status(500).json({message: error.message})
+        next(error);
     }
 
 }
