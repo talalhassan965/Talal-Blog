@@ -1,6 +1,9 @@
 import User from '../models/user.modle.js'
 import bcrytpjs from 'bcryptjs'
 import { errorHandler } from '../util/error.js';
+
+
+
 export const signup = async (req, res, next) =>{
     const {username, email, password} = req.body;
     if (!username || !email || !password || username === '' || email === '' || password === ''){
